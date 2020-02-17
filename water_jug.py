@@ -6,7 +6,7 @@ class jug:
     jug1=jugs[0]
     jug2=jugs[1]
     goal_amount=[]
-    graph={}
+
     visited_nodes=[(0,0)]
     parent={}
     j=(0,0)
@@ -70,7 +70,7 @@ class jug:
         print("steps: ")
         for i in self.visited_nodes:
             print(i)
-        print("Graph: ",self.graph)
+        print("Graph: ",graph)
         exit(0)
 
     def dfs(self,jugs):
@@ -81,35 +81,35 @@ class jug:
             self.print_solution()
 
         else:
-                                                                                                             # fill jug 1
+                                                                                                                                # fill jug 1
                 if not self.visited_nodes.__contains__((self.maxjug[0],jugs[1])):
-                    self.graph[jugs]=[[self.maxjug[0],jugs[1]]]
+                    graph[jugs]=[[self.maxjug[0],jugs[1]]]
 
-                    self.graph[self.maxjug[0], jugs[1]] =[]
+                    graph[self.maxjug[0], jugs[1]] =[]
                     self.visited_nodes.append((self.maxjug[0],jugs[1]))
                     flag=1
                     j=(self.maxjug[0],jugs[1])
                     self.dfs(j)
 
 
-                                                                                                              # fill jug 2
+                                                                                                                                # fill jug 2
                 if not self.visited_nodes.__contains__((jugs[0],self.maxjug[1])):
-                    self.graph[jugs].append([jugs[0],self.maxjug[1]])
-                    self.graph[jugs[0],self.maxjug[1]] =[]
+                    graph[jugs].append([jugs[0],self.maxjug[1]])
+                    graph[jugs[0],self.maxjug[1]] =[]
                     self.visited_nodes.append((jugs[0],self.maxjug[1]))
                     flag = 1
                     j=(jugs[0],self.maxjug[1])
                     self.dfs(j)
 
 
-                                                                                                              # transfer jug 1 to jug 2
+                                                                                                                                # transfer jug 1 to jug 2
 
                 jug2left = self.maxjug[1] - jugs[1]
                 if jugs[0]<=jug2left:
                     if not self.visited_nodes.__contains__((0, jugs[1] + jugs[0])):
-                        self.graph[jugs].append([0, jugs[1] + jugs[0]])
+                        graph[jugs].append([0, jugs[1] + jugs[0]])
                         self.visited_nodes.append((0, jugs[1] + jugs[0]))
-                        self.graph[0, jugs[1] + jugs[0]] = []
+                        graph[0, jugs[1] + jugs[0]] = []
                         flag = 1
                         j=(0, jugs[1] + jugs[0])
                         self.dfs(j)
@@ -118,47 +118,47 @@ class jug:
 
                 else:
                     if not self.visited_nodes.__contains__((jugs[0] - jug2left, jugs[1] + jug2left)):
-                            self.graph[jugs].append([jugs[0] - jug2left, jugs[1] + jug2left])
-                            self.graph[jugs[0] - jug2left, jugs[1] + jug2left] = []
+                            graph[jugs].append([jugs[0] - jug2left, jugs[1] + jug2left])
+                            graph[jugs[0] - jug2left, jugs[1] + jug2left] = []
                             self.visited_nodes.append((jugs[0] - jug2left, jugs[1] + jug2left))
                             flag = 1
                             j = (jugs[0] - jug2left, jugs[1] + jug2left)
                             self.dfs(j)
 
 
-                                                                                                                # empty jug 1
+                                                                                                                                # empty jug 1
                 if not self.visited_nodes.__contains__((0,jugs[1])):
-                    self.graph[jugs].append([0, jugs[1]])
-                    self.graph[0, jugs[1]] = []
+                    graph[jugs].append([0, jugs[1]])
+                    graph[0, jugs[1]] = []
                     flag = 1
                     self.visited_nodes.append((0,jugs[1]))
                     j = (0, jugs[1])
                     self.dfs(j)
 
-                                                                                                               #empty jug 2
+                                                                                                                                #empty jug 2
                 if not self.visited_nodes.__contains__((jugs[0],0)):
-                    self.graph[jugs].append([jugs[0],0])
-                    self.graph[jugs[0],0] = []
+                    graph[jugs].append([jugs[0],0])
+                    graph[jugs[0],0] = []
                     flag = 1
                     self.visited_nodes.append((jugs[0],0))
                     j = (jugs[0],0)
                     self.dfs(j)
 
-                                                                                                               #transfer jug 2 to jug 1
+                                                                                                                                #transfer jug 2 to jug 1
 
                 jug1left = self.maxjug[0] - jugs[0]
                 if jug1left >= jugs[1]:
                         if not self.visited_nodes.__contains__((jugs[1] + jugs[0],0)):
-                                self.graph[jugs].append([jugs[1] + jugs[0],0])
-                                self.graph[jugs[1] + jugs[0],0] = []
+                                graph[jugs].append([jugs[1] + jugs[0],0])
+                                graph[jugs[1] + jugs[0],0] = []
                                 flag = 1
                                 self.visited_nodes.append((jugs[1] + jugs[0],0))
                                 j = (jugs[1] + jugs[0],0)
                                 self.dfs(j)
                 else:
                         if not self.visited_nodes.__contains__((jugs[0] + jug1left, jugs[1] - jug1left)):
-                                self.graph[jugs].append([jugs[0] + jug1left, jugs[1] - jug1left])
-                                self.graph[jugs[0] + jug1left, jugs[1] - jug1left] = []
+                                graph[jugs].append([jugs[0] + jug1left, jugs[1] - jug1left])
+                                graph[jugs[0] + jug1left, jugs[1] - jug1left] = []
                                 self.visited_nodes.append((jugs[0] + jug1left, jugs[1] - jug1left))
                                 flag=1
                                 j = (jugs[0] + jug1left, jugs[1] - jug1left)
@@ -168,10 +168,10 @@ class jug:
     def bfs(self,jugs):
 
             flag = 0
-                                                                                                                # fill jug 1
+                                                                                                                                # fill jug 1
             if not self.visited_nodes.__contains__((self.maxjug[0], jugs[1])):
-                self.graph[jugs] = [[self.maxjug[0], jugs[1]]]
-                self.graph[self.maxjug[0], jugs[1]] = []
+                graph[jugs] = [[self.maxjug[0], jugs[1]]]
+                graph[self.maxjug[0], jugs[1]] = []
                 self.visited_nodes.append((self.maxjug[0], jugs[1]))
                 flag = 1
 
@@ -179,10 +179,10 @@ class jug:
                 self.parent[self.j] = jugs
                 self.check_bfs_goal(self.j)
 
-                                                                                                               # fill jug 2
+                                                                                                                                # fill jug 2
             if not self.visited_nodes.__contains__((jugs[0], self.maxjug[1])):
-                self.graph[jugs].append([jugs[0], self.maxjug[1]])
-                self.graph[jugs[0], self.maxjug[1]] = []
+                graph[jugs].append([jugs[0], self.maxjug[1]])
+                graph[jugs[0], self.maxjug[1]] = []
                 self.visited_nodes.append((jugs[0], self.maxjug[1]))
                 flag = 1
                 self.parent[jugs[0], self.maxjug[1]] = jugs
@@ -190,14 +190,14 @@ class jug:
                 self.parent[self.j] = jugs
                 self.check_bfs_goal(self.j)
 
-                                                                                                               # transfer jug 1 to jug 2
+                                                                                                                                # transfer jug 1 to jug 2
 
             jug2left = self.maxjug[1] - jugs[1]
             if jugs[0] <= jug2left:
                 if not self.visited_nodes.__contains__((0, jugs[1] + jugs[0])):
-                    self.graph[jugs].append([0, jugs[1] + jugs[0]])
+                    graph[jugs].append([0, jugs[1] + jugs[0]])
                     self.visited_nodes.append((0, jugs[1] + jugs[0]))
-                    self.graph[0, jugs[1] + jugs[0]] = []
+                    graph[0, jugs[1] + jugs[0]] = []
                     flag = 1
                     self.j = (0, jugs[1] + jugs[0])
                     self.parent[self.j] = jugs
@@ -209,8 +209,8 @@ class jug:
 
             else:
                 if not self.visited_nodes.__contains__((jugs[0] - jug2left, jugs[1] + jug2left)):
-                    self.graph[jugs].append([jugs[0] - jug2left, jugs[1] + jug2left])
-                    self.graph[jugs[0] - jug2left, jugs[1] + jug2left] = []
+                    graph[jugs].append([jugs[0] - jug2left, jugs[1] + jug2left])
+                    graph[jugs[0] - jug2left, jugs[1] + jug2left] = []
                     self.visited_nodes.append((jugs[0] - jug2left, jugs[1] + jug2left))
                     flag = 1
                     self.j = (jugs[0] - jug2left, jugs[1] + jug2left)
@@ -218,10 +218,10 @@ class jug:
                     self.check_bfs_goal(self.j)
 
 
-                                                                                                                # empty jug 1
+                                                                                                                                # empty jug 1
             if not self.visited_nodes.__contains__((0, jugs[1])):
-                self.graph[jugs].append([0, jugs[1]])
-                self.graph[0, jugs[1]] = []
+                graph[jugs].append([0, jugs[1]])
+                graph[0, jugs[1]] = []
                 flag = 1
                 self.visited_nodes.append((0, jugs[1]))
                 self.j = (0, jugs[1])
@@ -229,23 +229,23 @@ class jug:
                 self.check_bfs_goal(self.j)
 
 
-                                                                                                                # empty jug 2
+                                                                                                                                # empty jug 2
             if not self.visited_nodes.__contains__((jugs[0], 0)):
-                self.graph[jugs].append([jugs[0], 0])
-                self.graph[jugs[0], 0] = []
+                graph[jugs].append([jugs[0], 0])
+                graph[jugs[0], 0] = []
                 flag = 1
                 self.visited_nodes.append((jugs[0], 0))
                 self.j = (jugs[0], 0)
                 self.parent[self.j] = jugs
                 self.check_bfs_goal(self.j)
 
-                                                                                                               # transfer jug 2 to jug 1
+                                                                                                                                # transfer jug 2 to jug 1
 
             jug1left = self.maxjug[0] - jugs[0]
             if jug1left >= jugs[1]:
                 if not self.visited_nodes.__contains__((jugs[1] + jugs[0], 0)):
-                    self.graph[jugs].append([jugs[1] + jugs[0], 0])
-                    self.graph[jugs[1] + jugs[0], 0] = []
+                    graph[jugs].append([jugs[1] + jugs[0], 0])
+                    graph[jugs[1] + jugs[0], 0] = []
                     flag = 1
                     self.visited_nodes.append((jugs[1] + jugs[0], 0))
                     self.j = (jugs[1] + jugs[0], 0)
@@ -254,8 +254,8 @@ class jug:
 
             else:
                 if not self.visited_nodes.__contains__((jugs[0] + jug1left, jugs[1] - jug1left)):
-                    self.graph[jugs].append([jugs[0] + jug1left, jugs[1] - jug1left])
-                    self.graph[jugs[0] + jug1left, jugs[1] - jug1left] = []
+                    graph[jugs].append([jugs[0] + jug1left, jugs[1] - jug1left])
+                    graph[jugs[0] + jug1left, jugs[1] - jug1left] = []
                     self.visited_nodes.append((jugs[0] + jug1left, jugs[1] - jug1left))
                     flag = 1
                     self.j = (jugs[0] + jug1left, jugs[1] - jug1left)
@@ -284,9 +284,11 @@ class jug:
         for n in range(len(self.bfslist)-1,0,-1):
             print(self.bfslist[n])
         print(self.bfslist[0])
-        print("Graph :", self.graph)
+        print("Graph :", graph)
         exit(0)
 
 j=jug()
+graph={}
 maxjug=j.set_jugs()
+
 
